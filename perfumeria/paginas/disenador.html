@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñador - Pili Perfumería</title>
+    <link rel="stylesheet" href="catalogo.css">
+</head>
+<body>
+
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <h1>Pili</h1>
+                <p>PERFUMERÍA</p>
+            </div>
+            <nav class="main-menu">
+                <a href="../index.html">INICIO</a>
+                <a href="Hombre.html">HOMBRE</a>
+                <a href="Mujer.html">MUJER</a>
+                <a href="Nicho.html">NICHO</a>
+                <a href="Arabe.html">ÁRABE</a>
+                <a href="diseñador.html" class="active">DISEÑADOR</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="filters">
+            <h3>Filtrar por:</h3>
+            
+            <div class="filter-group">
+                <div class="filter-header">Aroma <span>▼</span></div>
+                <div id="aroma-filters">
+                    <label class="aroma-option"><input type="checkbox" value="Dulce" onchange="filtrarProductos()"> Dulces</label>
+                    <label class="aroma-option"><input type="checkbox" value="Cítrico" onchange="filtrarProductos()"> Cítricos / Frescos</label>
+                    <label class="aroma-option"><input type="checkbox" value="Floral" onchange="filtrarProductos()"> Florales</label>
+                    <label class="aroma-option"><input type="checkbox" value="Amaderado" onchange="filtrarProductos()"> Amaderados</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Precio <span>▲</span></div>
+                <div class="price-inputs">
+                    <div class="input-box"><input type="number" id="precio-min" placeholder="De" oninput="filtrarProductos()"></div>
+                    <div class="input-box"><input type="number" id="precio-max" placeholder="Para" oninput="filtrarProductos()"></div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="catalog-header">
+                <span id="info-productos">Cargando catálogo...</span>
+                <div class="sort-by">
+                    Ordenar: 
+                    <select id="ordenar-precio" onchange="filtrarProductos()" style="border:none; font-weight:bold; cursor:pointer; background:transparent;">
+                        <option value="mayor">Precio (Mayor a menor)</option>
+                        <option value="menor">Precio (Menor a mayor)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid" id="contenedor-disenador"></div>
+            <div class="pagination" id="paginacion"></div>
+        </section>
+    </main>
+
+    <footer class="footer-container">
+        <section class="slider">
+            <h3>El sello de la originalidad</h3>
+            <div class="slide-track">
+                <div class="slide"><img src="../img/logos/ch.png" alt="CH"></div>
+                <div class="slide"><img src="../img/logos/dior.png" alt="Dior"></div>
+                <div class="slide"><img src="../img/logos/armani.png" alt="Armani"></div>
+                <div class="slide"><img src="../img/logos/paco.png" alt="Paco Rabanne"></div>
+                <div class="slide"><img src="../img/logos/jpg.png" alt="JPG"></div>
+                <div class="slide"><img src="../img/logos/versace.png" alt="Versace"></div>
+                <div class="slide"><img src="../img/logos/ysl.png" alt="YSL"></div>
+                <div class="slide"><img src="../img/logos/ch.png" alt="CH"></div>
+                <div class="slide"><img src="../img/logos/dior.png" alt="Dior"></div>
+                <div class="slide"><img src="../img/logos/armani.png" alt="Armani"></div>
+                <div class="slide"><img src="../img/logos/paco.png" alt="Paco Rabanne"></div>
+                <div class="slide"><img src="../img/logos/jpg.png" alt="JPG"></div>
+                <div class="slide"><img src="../img/logos/versace.png" alt="Versace"></div>
+                <div class="slide"><img src="../img/logos/ysl.png" alt="YSL"></div>
+            </div>
+        </section>
+
+        <div class="footer-main">
+            <div class="footer-content container">
+                <div class="footer-logo-section">
+                    <div class="logo">
+                        <h1 style="color:white">Pili</h1>
+                        <p>PERFUMERÍA</p>
+                    </div>
+                    <p style="margin-top:20px; color:#ccc;">Fragancias originales que resaltan tu esencia</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Menú</h4>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="Nicho.html">Nicho</a></li>
+                        <li><a href="Hombre.html">Hombre</a></li>
+                        <li><a href="Mujer.html">Mujer</a></li>
+                        <li><a href="Arabe.html">Arabe</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><a href="#">Envíos</a></li>
+                        <li><a href="#">Cambios y devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contáctanos</h4>
+                    <ul>
+                        <li>📍 Bogotá, Colombia</li>
+                        <li>📞 +57 300 000 0000</li>
+                        <li>✉️ ventas@perfumeria.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const productosDisenador = [
+            { nombre: "Goosadasdasdasd Girl", marca: "Carolina Herrera", precio: 450000, familia: "Dulce", img: "../img/disenador/1.png" },
+            { nombre: "Bad Boy", marca: "Carolina Herrera", precio: 420000, familia: "Especiado", img: "../img/disenador/2.png" },
+            { nombre: "Sauvage EDP", marca: "Dior", precio: 580000, familia: "Cítrico", img: "../img/disenador/3.png" },
+            { nombre: "Miss Dior", marca: "Dior", precio: 520000, familia: "Floral", img: "../img/disenador/4.png" },
+            { nombre: "1 Million", marca: "Paco Rabanne", precio: 380000, familia: "Dulce", img: "../img/disenador/5.png" },
+            { nombre: "Phantom", marca: "Paco Rabanne", precio: 410000, familia: "Dulce", img: "../img/disenador/6.png" },
+            { nombre: "Le Male Elixir", marca: "JPG", precio: 510000, familia: "Dulce", img: "../img/disenador/7.png" },
+            { nombre: "Scandal Le Parfum", marca: "JPG", precio: 480000, familia: "Dulce", img: "../img/disenador/8.png" },
+            { nombre: "Acqua di Gio", marca: "Armani", precio: 450000, familia: "Cítrico", img: "../img/disenador/9.png" },
+            { nombre: "Si Passione", marca: "Armani", precio: 490000, familia: "Floral", img: "../img/disenador/10.png" },
+            { nombre: "Libre Intense", marca: "YSL", precio: 530000, familia: "Floral", img: "../img/disenador/11.png" },
+            { nombre: "Myslf", marca: "YSL", precio: 490000, familia: "Cítrico", img: "../img/disenador/12.png" },
+            { nombre: "Eros Flame", marca: "Versace", precio: 350000, familia: "Cítrico", img: "../img/disenador/13.png" },
+            { nombre: "Dylan Blue", marca: "Versace", precio: 320000, familia: "Amaderado", img: "../img/disenador/14.png" },
+            { nombre: "Light Blue", marca: "D&G", precio: 340000, familia: "Cítrico", img: "../img/disenador/15.png" },
+            { nombre: "The One", marca: "D&G", precio: 390000, familia: "Amaderado", img: "../img/disenador/16.png" },
+            { nombre: "Invictus Victory", marca: "Paco Rabanne", precio: 430000, familia: "Dulce", img: "../img/disenador/17.png" },
+            { nombre: "Olympéa Solar", marca: "Paco Rabanne", precio: 410000, familia: "Floral", img: "../img/disenador/18.png" },
+            { nombre: "La Vie Est Belle", marca: "Lancôme", precio: 480000, familia: "Dulce", img: "../img/disenador/19.png" },
+            { nombre: "Idôle", marca: "Lancôme", precio: 460000, familia: "Floral", img: "../img/disenador/20.png" },
+            { nombre: "Black Opium", marca: "YSL", precio: 470000, familia: "Dulce", img: "../img/disenador/21.png" },
+            { nombre: "CH Pasión", marca: "Carolina Herrera", precio: 440000, familia: "Floral", img: "../img/disenador/22.png" },
+            { nombre: "212 VIP Rose", marca: "Carolina Herrera", precio: 395000, familia: "Floral", img: "../img/disenador/23.png" },
+            { nombre: "Valentino Born in Roma", marca: "Valentino", precio: 540000, familia: "Dulce", img: "../img/disenador/24.png" },
+            { nombre: "Prada Paradoxe", marca: "Prada", precio: 560000, familia: "Floral", img: "../img/disenador/25.png" },
+            { nombre: "Luna Rossa Ocean", marca: "Prada", precio: 450000, familia: "Cítrico", img: "../img/disenador/26.png" },
+            { nombre: "Boss Bottled Elixir", marca: "Hugo Boss", precio: 460000, familia: "Amaderado", img: "../img/disenador/27.png" },
+            { nombre: "Boss The Scent", marca: "Hugo Boss", precio: 410000, familia: "Especiado", img: "../img/disenador/28.png" },
+            { nombre: "Toy Boy", marca: "Moschino", precio: 310000, familia: "Amaderado", img: "../img/disenador/29.png" },
+            { nombre: "Stronger With You", marca: "Armani", precio: 430000, familia: "Dulce", img: "../img/disenador/30.png" }
+        ];
+
+        let productosFiltrados = [...productosDisenador];
+        const porPagina = 15;
+        let paginaActual = 1;
+        const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+
+        function filtrarProductos() {
+            const min = parseFloat(document.getElementById('precio-min').value) || 0;
+            const max = parseFloat(document.getElementById('precio-max').value) || Infinity;
+            const orden = document.getElementById('ordenar-precio').value;
+            const aromas = Array.from(document.querySelectorAll('#aroma-filters input:checked')).map(cb => cb.value);
+
+            productosFiltrados = productosDisenador.filter(p => {
+                const cPrecio = p.precio >= min && p.precio <= max;
+                const cAroma = aromas.length === 0 || aromas.includes(p.familia);
+                return cPrecio && cAroma;
+            });
+
+            productosFiltrados.sort((a, b) => orden === 'mayor' ? b.precio - a.precio : a.precio - b.precio);
+            renderizarPagina(1);
+        }
+
+        function renderizarPagina(n) {
+            paginaActual = n;
+            const contenedor = document.getElementById('contenedor-disenador');
+            contenedor.innerHTML = '';
+            const visibles = productosFiltrados.slice((n - 1) * porPagina, n * porPagina);
+
+            visibles.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image"><img src="${p.img}" alt="${p.nombre}" onerror="this.src='https://placehold.co/400x500/f0f0f0/666?text=Designer'"></div>
+                    <div class="product-info">
+                        <p class="brand">${p.marca} • <span style="font-weight:normal; font-size:0.7rem;">${p.familia}</span></p>
+                        <h3>${p.nombre}</h3>
+                        <p class="price">${formatter.format(p.precio)}</p>
+                        <button class="btn-add">Agregar al carrito</button>
+                    </div>`;
+                contenedor.appendChild(card);
+            });
+            actualizarPaginacion();
+            document.getElementById('info-productos').innerText = `Mostrando ${productosFiltrados.length} perfumes`;
+        }
+
+        function actualizarPaginacion() {
+            const pagDiv = document.getElementById('paginacion');
+            pagDiv.innerHTML = '';
+            const total = Math.ceil(productosFiltrados.length / porPagina);
+            for (let i = 1; i <= total; i++) {
+                const a = document.createElement('a');
+                a.href = "#"; a.innerText = i;
+                a.className = (i === paginaActual) ? 'active' : '';
+                a.onclick = (e) => { e.preventDefault(); renderizarPagina(i); window.scrollTo({top: 0, behavior: 'smooth'}); };
+                pagDiv.appendChild(a);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => filtrarProductos());
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árabe - Pili Perfumería</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <style>
+        /* Estilos para asegurar simetría visual */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+
+        .product-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-size: 14px;
+            margin: 5px 0;
+            min-height: 40px; /* Alineación de títulos */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-label {
+            color: gray;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            color: #800020;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Botón de WhatsApp estilo "CONSULTAR" */
+        .btn-consultar {
+            display: block;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-consultar:hover {
+            background-color: #333;
+        }
+
+        /* Estilo de lista de filtros (limpio) */
+        .filter-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .filter-list li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 6px 0;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            padding-left: 10px;
+            transition: 0.2s;
+        }
+
+        .filter-list li a:hover, .filter-list li a.active {
+            font-weight: bold;
+            border-left: 3px solid #000;
+            color: #000;
+        }
+
+        .price-inputs .input-box input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <h1>Pili</h1>
+                <p>PERFUMERÍA</p>
+            </div>
+            <nav class="main-menu">
+                <a href="../index.html">INICIO</a>
+                <a href="Hombre.html">HOMBRE</a>
+                <a href="Mujer.html">MUJER</a>
+                <a href="Nicho.html">NICHO</a>
+                <a href="arabe.html" class="active">ÁRABE</a>
+                
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="filters">
+            <h3>Filtrar:</h3>
+            
+            <div class="filter-group">
+                <div class="filter-header">Marca <span>▼</span></div>
+                <ul class="filter-list" id="filter-marca">
+                    <li><a href="#" class="active" onclick="filtrarPorMarca('Todas', this)">Todas</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Lattafa', this)">Lattafa</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Armaf', this)">Armaf</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Afnan', this)">Afnan</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Rasasi', this)">Rasasi</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Precio <span>▲</span></div>
+                <div class="price-inputs">
+                    <div class="input-box"><input type="number" id="min-price" placeholder="De" oninput="filtrarProductos()"></div>
+                    <div class="input-box"><input type="number" id="max-price" placeholder="Para" oninput="filtrarProductos()"></div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="catalog-header">
+                <span id="info-productos">Cargando catálogo...</span>
+                <div class="sort-by">Ordenar: <strong>Novedades ▼</strong></div>
+            </div>
+
+            <div class="product-grid" id="contenedor-productos"></div>
+
+            <div class="pagination" id="paginacion"></div>
+        </section>
+    </main>
+
+    <script>
+        const productosArabe = [
+            { nombre: "Khamrah", marca: "Lattafa", precio: 180000, img: "../perfumes arabes/1.png" },
+            { nombre: "Yara Rosa", marca: "Lattafa", precio: 165000, img: "../perfumes arabes/2.png" },
+            { nombre: "Asad", marca: "Lattafa", precio: 180000, img: "../perfumes arabes/3.png" },
+            { nombre: "Club de Nuit Intense Man", marca: "Armaf", precio: 220000, img: "../perfumes arabes/4.png" },
+            { nombre: "Hawas for Him", marca: "Rasasi", precio: 280000, img: "../perfumes arabes/5.png" },
+            { nombre: "9 PM", marca: "Afnan", precio: 195000, img: "../perfumes arabes/6.png" },
+            { nombre: "Amber Oud Gold Edition", marca: "Al Haramain", precio: 320000, img: "../perfumes arabes/7.png" },
+            { nombre: "Oud for Glory", marca: "Lattafa", precio: 190000, img: "../perfumes arabes/8.png" },
+            { nombre: "Shaghaf Oud", marca: "Swiss Arabian", precio: 185000, img: "../perfumes arabes/9.png" },
+            { nombre: "Delilah", marca: "Maison Alhambra", precio: 155000, img: "../perfumes arabes/10.png" },
+            { nombre: "Ameer Al Oudh Intense", marca: "Lattafa", precio: 160000, img: "../perfumes arabes/11.png" },
+            { nombre: "Turathi Blue", marca: "Afnan", precio: 230000, img: "../perfumes arabes/12.png" },
+            { nombre: "Fakhar Black", marca: "Lattafa", precio: 165000, img: "../perfumes arabes/13.png" },
+            { nombre: "Amber Rouge", marca: "Orientica", precio: 350000, img: "../perfumes arabes/14.png" },
+            { nombre: "Odyssey Mandarin Sky", marca: "Armaf", precio: 175000, img: "../perfumes arabes/15.png" },
+            { nombre: "Nebras", marca: "Lattafa", precio: 230000, img: "../perfumes arabes/16.png" },
+            { nombre: "La Yuqawam", marca: "Rasasi", precio: 420000, img: "../perfumes arabes/17.png" },
+            { nombre: "Khamrah Qahwa", marca: "Lattafa", precio: 245000, img: "../perfumes arabes/18.png" },
+            { nombre: "Supremacy Not Only Intense", marca: "Afnan", precio: 290000, img: "../perfumes arabes/19.png" },
+            { nombre: "Maahir Legacy", marca: "Lattafa", precio: 185000, img: "../perfumes arabes/20.png" },
+            { nombre: "Yara Moi (Blanco)", marca: "Lattafa", precio: 165000, img: "../perfumes arabes/21.png" },
+            { nombre: "Yara Tous (Mango)", marca: "Lattafa", precio: 175000, img: "../perfumes arabes/22.png" },
+            { nombre: "Amethyst (Bade'e Al Oud)", marca: "Lattafa", precio: 190000, img: "../perfumes arabes/23.png" },
+            { nombre: "Honor & Glory", marca: "Lattafa", precio: 210000, img: "../perfumes arabes/24.png" },
+            { nombre: "Qaed Al Fursan", marca: "Lattafa", precio: 140000, img: "../perfumes arabes/25.png" },
+            { nombre: "Qaed Al Fursan Unlimited", marca: "Lattafa", precio: 145000, img: "../perfumes arabes/26.png" },
+            { nombre: "Sheikh Al Shuyukh Luxe", marca: "Lattafa", precio: 150000, img: "../perfumes arabes/27.png" },
+            { nombre: "Eclaire", marca: "Lattafa", precio: 260000, img: "../perfumes arabes/28.png" },
+            { nombre: "Hayaati Black", marca: "Lattafa", precio: 135000, img: "../perfumes arabes/29.png" },
+            { nombre: "Mazaaji", marca: "Lattafa", precio: 145000, img: "../perfumes arabes/30.png" },
+            { nombre: "Ajwad", marca: "Lattafa", precio: 160000, img: "../perfumes arabes/31.png" },
+            { nombre: "Vintage Radio", marca: "Lattafa", precio: 250000, img: "../perfumes arabes/32.png" },
+            { nombre: "Liam Blue Shine", marca: "Lattafa", precio: 185000, img: "../perfumes arabes/33.png" },
+            { nombre: "Musamam White Intense", marca: "Lattafa", precio: 270000, img: "../perfumes arabes/34.png" },
+            { nombre: "Ishq Al Shuyukh Gold", marca: "Lattafa", precio: 220000, img: "../perfumes arabes/35.png" },
+            { nombre: "Ansaam Gold", marca: "Lattafa", precio: 240000, img: "../perfumes arabes/36.png" },
+            { nombre: "Kismet Magic", marca: "Maison Alhambra", precio: 180000, img: "../perfumes arabes/37.png" },
+            { nombre: "Hercules", marca: "Maison Alhambra", precio: 165000, img: "../perfumes arabes/38.png" },
+            { nombre: "Jean Lowe Immortal", marca: "Maison Alhambra", precio: 210000, img: "../perfumes arabes/39.png" },
+            { nombre: "Lovely Cherie", marca: "Maison Alhambra", precio: 160000, img: "../perfumes arabes/40.png" },
+            { nombre: "Club de Nuit Milestone", marca: "Armaf", precio: 195000, img: "../perfumes arabes/41.png" },
+            { nombre: "Club de Nuit Sillage", marca: "Armaf", precio: 195000, img: "../perfumes arabes/42.png" },
+            { nombre: "Club de Nuit Untold", marca: "Armaf", precio: 310000, img: "../perfumes arabes/43.png" },
+            { nombre: "Club de Nuit Iconic", marca: "Armaf", precio: 260000, img: "../perfumes arabes/44.png" },
+            { nombre: "Hunter Killer", marca: "Armaf", precio: 155000, img: "../perfumes arabes/45.png" },
+            { nombre: "Tres Nuit", marca: "Armaf", precio: 140000, img: "../perfumes arabes/46.png" },
+            { nombre: "Ventana", marca: "Armaf", precio: 145000, img: "../perfumes arabes/47.png" },
+            { nombre: "Rare Carbon", marca: "Afnan", precio: 210000, img: "../perfumes arabes/48.png" },
+            { nombre: "Modest Une", marca: "Afnan", precio: 185000, img: "../perfumes arabes/49.png" },
+            { nombre: "Turathi Brown", marca: "Afnan", precio: 240000, img: "../perfumes arabes/50.png" },
+            { nombre: "Shuhrah", marca: "Rasasi", precio: 185000, img: "../perfumes arabes/51.png" },
+            { nombre: "Daarej For Him", marca: "Rasasi", precio: 155000, img: "../perfumes arabes/52.png" },
+            { nombre: "Hawas Ice", marca: "Rasasi", precio: 330000, img: "../perfumes arabes/53.png" },
+            { nombre: "Detour Noir", marca: "Al Haramain", precio: 195000, img: "../perfumes arabes/54.png" },
+            { nombre: "L'Aventure", marca: "Al Haramain", precio: 215000, img: "../perfumes arabes/55.png" },
+            { nombre: "Casablanca", marca: "Swiss Arabian", precio: 250000, img: "../perfumes arabes/56.png" },
+            { nombre: "Wisal", marca: "Ajmal", precio: 170000, img: "../perfumes arabes/57.png" },
+            { nombre: "Sharaf Blend", marca: "Zimaya", precio: 195000, img: "../perfumes arabes/58.png" },
+            { nombre: "Royal Blends", marca: "Zimaya", precio: 185000, img: "../perfumes arabes/59.png" },
+            { nombre: "Rabwa", marca: "Rasasi", precio: 160000, img: "../perfumes arabes/60.png" },
+            { nombre: "Tasmeem", marca: "Rasasi", precio: 165000, img: "../perfumes arabes/61.png" },
+            { nombre: "Fattan", marca: "Rasasi", precio: 130000, img: "../perfumes arabes/62.png" },
+            { nombre: "Ejaazi", marca: "Lattafa", precio: 125000, img: "../perfumes arabes/63.png" },
+            { nombre: "Ejaazi Silver", marca: "Lattafa", precio: 130000, img: "../perfumes arabes/64.png" },
+            { nombre: "Ramz Silver", marca: "Lattafa", precio: 135000, img: "../perfumes arabes/65.png" },
+            { nombre: "Najdia", marca: "Lattafa", precio: 125000, img: "../perfumes arabes/66.png" },
+            { nombre: "Raghba Wood Intense", marca: "Lattafa", precio: 145000, img: "../perfumes arabes/67.png" },
+            { nombre: "Qaa'ed", marca: "Lattafa", precio: 140000, img: "../perfumes arabes/68.png" },
+            { nombre: "Velvet Oud", marca: "Lattafa", precio: 155000, img: "../perfumes arabes/69.png" },
+            { nombre: "Pure Musk", marca: "Lattafa", precio: 130000, img: "../perfumes arabes/70.png" }
+        ];
+
+        let productosFiltrados = [...productosArabe];
+        let filtroMarca = "Todas";
+        const porPagina = 15;
+        let paginaActual = 1;
+        const numWA = "573000000000"; // Cambia por tu número real
+
+        function filtrarPorMarca(marca, elemento) {
+            filtroMarca = marca;
+            document.querySelectorAll('#filter-marca a').forEach(a => a.classList.remove('active'));
+            elemento.classList.add('active');
+            filtrarProductos();
+        }
+
+        function filtrarProductos() {
+            const min = parseFloat(document.getElementById('min-price').value) || 0;
+            const max = parseFloat(document.getElementById('max-price').value) || Infinity;
+
+            productosFiltrados = productosArabe.filter(p => {
+                const cumplePrecio = p.precio >= min && p.precio <= max;
+                const cumpleMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
+                return cumplePrecio && cumpleMarca;
+            });
+
+            renderizarPagina(1);
+        }
+
+        function renderizarPagina(n) {
+            paginaActual = n;
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = '';
+
+            const inicio = (n - 1) * porPagina;
+            const fin = n * porPagina;
+            const visibles = productosFiltrados.slice(inicio, fin);
+
+            visibles.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${p.img}" alt="${p.nombre}">
+                    </div>
+                    <div class="product-info">
+                        <p class="brand-label">${p.marca}</p>
+                        <h3>${p.nombre}</h3>
+                        <p class="price">$${p.precio.toLocaleString('es-CO')} COP</p>
+                    </div>
+                    <a href="#" class="btn-consultar" data-name="${p.nombre}">CONSULTAR</a>
+                `;
+                contenedor.appendChild(card);
+            });
+
+            // Lógica de WhatsApp
+            document.querySelectorAll('.btn-consultar').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    const msg = encodeURIComponent(`¡Hola! Me interesa el perfume árabe: ${btn.dataset.name}`);
+                    window.open(`https://wa.me/${numWA}?text=${msg}`, '_blank');
+                };
+            });
+
+            actualizarBotonesPaginacion();
+            document.getElementById('info-productos').innerText = `Mostrando ${productosFiltrados.length} productos (Pág ${n})`;
+        }
+
+        function actualizarBotonesPaginacion() {
+            const pagDiv = document.getElementById('paginacion');
+            pagDiv.innerHTML = '';
+            const totalPaginas = Math.ceil(productosFiltrados.length / porPagina);
+
+            for (let i = 1; i <= totalPaginas; i++) {
+                const btn = document.createElement('a');
+                btn.href = "#";
+                btn.innerText = i;
+                btn.className = (i === paginaActual) ? 'active' : '';
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    renderizarPagina(i);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                };
+                pagDiv.appendChild(btn);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderizarPagina(1));
+    </script>
+
+    <footer class="footer-main">
+        <div class="footer-content container">
+            <div class="footer-logo-section">
+                <img src="../logofinal.png" alt="Pili Logo" class="footer-logo">
+                <p>Fragancias originales que resaltan tu esencia</p>
+            </div>
+            
+            
+            <div class="footer-links">
+                <h4>Menú</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="Nicho.html">Nicho</a></li>
+                    <li><a href="Hombre.html">Hombre</a></li>
+                    <li><a href="Mujer.html">Mujer</a></li>
+                    <li><a href="Arabe.html">Arabe</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contáctanos</h4>
+                <style>
+    .footer-contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateX(10px); /* Efecto de movimiento al pasar el mouse */
+    }
+
+    .icon-box {
+        width: 35px;
+        height: 35px;
+        background: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-item svg {
+        width: 18px;
+        height: 18px;
+        fill: #fff; /* Color del icono */
+    }
+
+    .contact-item span {
+        font-size: 0.95rem;
+        color: #ddd;
+    }
+
+    .contact-item a {
+        text-decoration: none;
+        color: #ddd;
+        transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+        color: #fff; /* Brilla al pasar el mouse */
+    }
+</style>
+
+<div class="footer-contact">
+    <div class="footer-contact-list">
+        
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span>Bogotá, Colombia</span>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <a href="https://wa.me/573132389523" target="_blank">+57 313 238 9523</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <a href="mailto:piliperfumeriaq@gmail.com">piliperfumeriaq@gmail.com</a>
+        </div>
+
+    </div>
+</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

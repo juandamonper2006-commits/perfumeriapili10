@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicho - Pili Perfumería</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <style>
+        /* Ajustes para simetría total como en Hombre */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+
+        .product-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        /* Altura fija para nombres y marcas para que no se desalineen los botones */
+        .product-info h3 {
+            font-size: 14px;
+            margin: 5px 0;
+            min-height: 40px; /* Asegura que nombres largos no muevan el botón */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-label {
+            color: gray;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            color: #800020;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Botón negro igual a Hombre */
+        .btn-consultar {
+            display: block;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Filtros estilo limpio (sin checkboxes) */
+        .filter-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .filter-list li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 6px 0;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            padding-left: 10px;
+            transition: 0.2s;
+        }
+
+        .filter-list li a:hover, .filter-list li a.active {
+            font-weight: bold;
+            border-left: 3px solid #000;
+            color: #000;
+        }
+
+        /* Grid de productos */
+        #contenedor-nicho {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Ajustado a 4 para mejor visibilidad */
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) { #contenedor-nicho { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { #contenedor-nicho { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <h1>Pili</h1>
+                <p>PERFUMERÍA</p>
+            </div>
+            <nav class="main-menu">
+                <a href="../index.html">INICIO</a>
+                <a href="Hombre.html">HOMBRE</a>
+                <a href="Mujer.html">MUJER</a>
+                <a href="Nicho.html" class="active">NICHO</a>
+                <a href="Arabe.html">ÁRABE</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="filters">
+            <h3>Filtrar por:</h3>
+            
+            <div class="filter-group">
+                <div class="filter-header">Aroma <span>▼</span></div>
+                <ul class="filter-list" id="aroma-filters">
+                    <li><a href="#" class="active" onclick="filtrarPorAroma('Todos', this)">Todos</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Dulce', this)">Dulce / Gourmet</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Amaderado', this)">Amaderado / Oud</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Cítrico', this)">Cítrico / Fresco</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Floral', this)">Floral</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Especiado', this)">Especiado</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Precio <span>▲</span></div>
+                <div class="price-inputs">
+                    <div class="input-box"><input type="number" id="precio-min" placeholder="De" oninput="filtrarProductos()"></div>
+                    <div class="input-box"><input type="number" id="precio-max" placeholder="Para" oninput="filtrarProductos()"></div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="catalog-header">
+                <span id="info-productos">Cargando...</span>
+                <div class="sort-by">
+                    Ordenar: 
+                    <select id="ordenar-precio" onchange="filtrarProductos()" style="border:none; font-weight:bold; cursor:pointer; background:transparent;">
+                        <option value="mayor">Precio (Mayor a menor)</option>
+                        <option value="menor">Precio (Menor a mayor)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid" id="contenedor-nicho"></div>
+            <div class="pagination" id="paginacion"></div>
+        </section>
+    </main>
+
+    <script>
+        const productosNicho = [
+            { nombre: "Baccarat Rouge 540 70ml", marca: "MFK", precio: 2100000, familia: "Dulce", img: "../perfumesnicho/a.png" },
+            { nombre: "Layton", marca: "Parfums de Marly", precio: 1295000, familia: "Especiado", img: "../perfumesnicho/b.jpg" },
+            { nombre: "Kirke", marca: "Tiziana Terenzi", precio: 780000, familia: "Dulce", img: "../perfumesnicho/c.png" },
+            { nombre: "Aventus", marca: "Creed", precio: 1430000, familia: "Cítrico", img: "../perfumesnicho/d.png" },
+            { nombre: "Ani", marca: "Nishane", precio: 985000, familia: "Especiado", img: "../perfumesnicho/e.png" },
+            { nombre: "Alexandria II", marca: "Xerjoff", precio: 1705000, familia: "Amaderado", img: "../perfumesnicho/f.png" },
+            { nombre: "Angels' Share", marca: "By Kilian", precio: 1850000, familia: "Dulce", img: "../perfumesnicho/g.png" },
+            { nombre: "Delina Exclusif", marca: "Parfums de Marly", precio: 1280000, familia: "Floral", img: "../perfumesnicho/h.png" },
+            { nombre: "Grand Soir", marca: "MFK", precio: 1082000, familia: "Amaderado", img: "../perfumesnicho/i.png" },
+            { nombre: "Erba Pura", marca: "Xerjoff", precio: 1120000, familia: "Dulce", img: "../perfumesnicho/j.png" },
+            { nombre: "Lost Cherry", marca: "Tom Ford Private", precio: 1790000, familia: "Dulce", img: "../perfumesnicho/k.png" },
+            { nombre: "Oud for Greatness", marca: "Initio", precio: 1240000, familia: "Amaderado", img: "../perfumesnicho/l.png" },
+            { nombre: "Silver Mountain Water", marca: "Creed", precio: 1230000, familia: "Cítrico", img: "../perfumesnicho/m.png" },
+            { nombre: "Hacivat", marca: "Nishane", precio: 1050000, familia: "Cítrico", img: "../perfumesnicho/n.png" },
+            { nombre: "Oriana", marca: "Parfums de Marly", precio: 1240000, familia: "Dulce", img: "../perfumesnicho/o.png" },
+            { nombre: "Black Phantom", marca: "By Kilian", precio: 1240000, familia: "Dulce", img: "../perfumesnicho/p.png" },
+            { nombre: "Naxos", marca: "Xerjoff", precio: 1195000, familia: "Dulce", img: "../perfumesnicho/q.png" },
+            { nombre: "Baccarat Rouge", marca: "MFK", precio: 1620000, familia: "Dulce", img: "../perfumesnicho/r.png" },
+            { nombre: "Side Effect", marca: "Initio", precio: 1300000, familia: "Especiado", img: "../perfumesnicho/t.png" },
+            { nombre: "Ombre Nomade", marca: "Louis Vuitton", precio: 1950000, familia: "Amaderado", img: "../perfumesnicho/v.png" },
+            { nombre: "Haltane", marca: "Parfums de Marly", precio: 1270000, familia: "Amaderado", img: "../perfumesnicho/w.png" },
+            { nombre: "Tobacco Vanille", marca: "Tom Ford Private", precio: 1790000, familia: "Dulce", img: "../perfumesnicho/s.png" },
+            { nombre: "Millésime Impérial", marca: "Creed", precio: 1300000, familia: "Cítrico", img: "../perfumesnicho/x.png" },
+            { nombre: "Gentle Fluidity Silver", marca: "MFK", precio: 950000, familia: "Cítrico", img: "../perfumesnicho/z.png" },
+            { nombre: "Accento", marca: "Xerjoff", precio: 1020000, familia: "Floral", img: "../perfumesnicho/y.png" },
+            { nombre: "Cassiopea", marca: "Tiziana Terenzi", precio: 820000, familia: "Dulce", img: "../perfumesnicho/ñ.png" },
+            { nombre: "Green Irish Tweed", marca: "Creed", precio: 1350000, familia: "Cítrico", img: "../perfumesnicho/99.png" },
+            { nombre: "Percival", marca: "Parfums de Marly", precio: 1150000, familia: "Cítrico", img: "../perfumesnicho/98.png" },
+            { nombre: "Absolute Aphrodisiac", marca: "Initio", precio: 1250000, familia: "Dulce", img: "../perfumesnicho/97.png" },
+            { nombre: "Laudano Nero", marca: "Tiziana Terenzi", precio: 780000, familia: "Amaderado", img: "../perfumesnicho/96.png" },
+            { nombre: "Arabians Tonka", marca: "Montale", precio: 550000, familia: "Dulce", img: "../perfumesnicho/95.png" },
+            { nombre: "Amore Caffè", marca: "Mancera", precio: 580000, familia: "Dulce", img: "../perfumesnicho/94.png" },
+            { nombre: "Shaghaf Oud", marca: "Swiss Arabian", precio: 220000, familia: "Amaderado", img: "../perfumesnicho/93.png" }
+        ];
+
+        let productosFiltrados = [...productosNicho];
+        let filtroAroma = "Todos";
+        const porPagina = 12;
+        let paginaActual = 1;
+        const numeroWhatsApp = "573000000000"; // Reemplaza con tu número real
+
+        function filtrarPorAroma(aroma, elemento) {
+            filtroAroma = aroma;
+            // Actualizar clase activa en la lista
+            document.querySelectorAll('#aroma-filters a').forEach(a => a.classList.remove('active'));
+            elemento.classList.add('active');
+            filtrarProductos();
+        }
+
+        function filtrarProductos() {
+            const min = parseFloat(document.getElementById('precio-min').value) || 0;
+            const max = parseFloat(document.getElementById('precio-max').value) || Infinity;
+            const orden = document.getElementById('ordenar-precio').value;
+            
+            productosFiltrados = productosNicho.filter(p => {
+                const cumplePrecio = p.precio >= min && p.precio <= max;
+                const cumpleAroma = filtroAroma === "Todos" || p.familia === filtroAroma;
+                return cumplePrecio && cumpleAroma;
+            });
+
+            productosFiltrados.sort((a, b) => orden === 'mayor' ? b.precio - a.precio : a.precio - b.precio);
+            renderizarPagina(1);
+        }
+
+        function renderizarPagina(n) {
+            paginaActual = n;
+            const contenedor = document.getElementById('contenedor-nicho');
+            contenedor.innerHTML = ''; 
+            
+            const visibles = productosFiltrados.slice((n - 1) * porPagina, n * porPagina);
+
+            visibles.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${p.img}" alt="${p.nombre}">
+                    </div>
+                    <div class="product-info">
+                        <p class="brand-label">${p.marca} • ${p.familia}</p>
+                        <h3>${p.nombre}</h3>
+                        <p class="price">$${p.precio.toLocaleString('es-CO')} COP</p>
+                    </div>
+                    <a href="#" class="btn-consultar" data-nombre="${p.nombre}">CONSULTAR</a>
+                `;
+                contenedor.appendChild(card);
+            });
+
+            // Configurar clics de WhatsApp
+            document.querySelectorAll('.btn-consultar').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    const mensaje = encodeURIComponent(`¡Hola! Me interesa el perfume Nicho: ${btn.dataset.nombre}`);
+                    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
+                };
+            });
+
+            actualizarPaginacion();
+            document.getElementById('info-productos').innerText = `Mostrando ${productosFiltrados.length} perfumes`;
+        }
+
+        function actualizarPaginacion() {
+            const pagDiv = document.getElementById('paginacion');
+            pagDiv.innerHTML = '';
+            const totalPaginas = Math.ceil(productosFiltrados.length / porPagina);
+            for (let i = 1; i <= totalPaginas; i++) {
+                const a = document.createElement('a');
+                a.href = "#"; a.innerText = i;
+                a.className = (i === paginaActual) ? 'active' : '';
+                a.onclick = (e) => { 
+                    e.preventDefault(); 
+                    renderizarPagina(i); 
+                    window.scrollTo({top: 0, behavior: 'smooth'}); 
+                };
+                pagDiv.appendChild(a);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => filtrarProductos());
+    </script>
+
+    <section class="slider">
+        <h3>El Sello de la Originalidad</h3>
+        <div class="slide-track">
+            <div class="slide"><img src="/Slider/Lversace.png" alt="Versace"></div>
+            <div class="slide"><img src="/Slider/armaf.jpg" alt="Armaf"></div>
+            <div class="slide"><img src="/Slider/Chanel.png" alt="Chanel"></div>
+            <div class="slide"><img src="/Slider/bhararaa.jpg" alt="Bharara"></div>
+            <div class="slide"><img src="/Slider/Bvlgari.png" alt="Bvlgari"></div>
+            <div class="slide"><img src="/Slider/R.PNG" alt="Lattafa"></div>
+            <div class="slide"><img src="/Slider/Hugo.png" alt="Hugo Boss"></div>
+            <div class="slide"><img src="/Slider/Paco.png" alt="PACO"></div>
+            <div class="slide"><img src="/Slider/Dior.jpg" alt="Dior"></div>
+        </div>
+    </section>
+
+    <footer class="footer-main">
+        <div class="footer-content container">
+            <div class="footer-logo-section">
+                <img src="../logofinal.png" alt="Pili Logo" class="footer-logo">
+                <p>Fragancias originales que resaltan tu esencia</p>
+            </div>
+            
+            
+            <div class="footer-links">
+                <h4>Menú</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="Nicho.html">Nicho</a></li>
+                    <li><a href="Hombre.html">Hombre</a></li>
+                    <li><a href="Mujer.html">Mujer</a></li>
+                    <li><a href="Arabe.html">Arabe</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contáctanos</h4>
+                <style>
+    .footer-contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateX(10px); /* Efecto de movimiento al pasar el mouse */
+    }
+
+    .icon-box {
+        width: 35px;
+        height: 35px;
+        background: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-item svg {
+        width: 18px;
+        height: 18px;
+        fill: #fff; /* Color del icono */
+    }
+
+    .contact-item span {
+        font-size: 0.95rem;
+        color: #ddd;
+    }
+
+    .contact-item a {
+        text-decoration: none;
+        color: #ddd;
+        transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+        color: #fff; /* Brilla al pasar el mouse */
+    }
+</style>
+
+<div class="footer-contact">
+    <div class="footer-contact-list">
+        
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span>Bogotá, Colombia</span>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <a href="https://wa.me/573132389523" target="_blank">+57 313 238 9523</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <a href="mailto:piliperfumeriaq@gmail.com">piliperfumeriaq@gmail.com</a>
+        </div>
+
+    </div>
+</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

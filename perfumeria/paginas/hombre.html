@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hombre - Pili Perfumería</title>
+    <link rel="stylesheet" href="catalogo.css">
+    <style>
+        /* Estilos adicionales para que los filtros funcionen visualmente */
+        .filter-content { display: block; padding: 10px 0; }
+        .filter-item { 
+            display: block; 
+            padding: 5px 10px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            color: #666; 
+            transition: 0.3s;
+        }
+        .filter-item:hover { color: #000; background: #f9f9f9; }
+        .filter-item.active { font-weight: bold; color: #000; border-left: 2px solid #000; }
+        .hidden-filter { display: none !important; }
+        
+        /* Ajuste para nombres largos */
+        .product-card { height: auto !important; min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-info h3 { min-height: 45px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <h1>Pili</h1>
+                <p>PERFUMERÍA</p>
+            </div>
+            <nav class="main-menu">
+                <a href="../index.html">INICIO</a>
+                <a href="Hombre.html" class="active">HOMBRE</a>
+                <a href="Mujer.html">MUJER</a>
+                <a href="Nicho.html">NICHO</a>
+                <a href="Arabe.html">ÁRABE</a>
+                
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="filters">
+            <h3>Filtrar:</h3>
+            
+            <div class="filter-group">
+                <div class="filter-header">Precio <span>▲</span></div>
+                <div class="price-inputs">
+                    <div class="input-box"><input type="number" id="min-price" placeholder="De" oninput="aplicarFiltros()"></div>
+                    <div class="input-box"><input type="number" id="max-price" placeholder="Para" oninput="aplicarFiltros()"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Aroma <span>▼</span></div>
+                <div class="filter-content">
+                    <span class="filter-item active" data-type="aroma" data-value="todos" onclick="seleccionarFiltro(this)">Todos</span>
+                    <span class="filter-item" data-type="aroma" data-value="Cítrico" onclick="seleccionarFiltro(this)">Cítrico</span>
+                    <span class="filter-item" data-type="aroma" data-value="Amaderado" onclick="seleccionarFiltro(this)">Amaderado</span>
+                    <span class="filter-item" data-type="aroma" data-value="Dulce" onclick="seleccionarFiltro(this)">Dulce</span>
+                    <span class="filter-item" data-type="aroma" data-value="Fresco" onclick="seleccionarFiltro(this)">Fresco</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Marca <span>▼</span></div>
+                <div class="filter-content">
+                    <span class="filter-item active" data-type="marca" data-value="todos" onclick="seleccionarFiltro(this)">Todas</span>
+                    <span class="filter-item" data-type="marca" data-value="Carolina Herrera" onclick="seleccionarFiltro(this)">Carolina Herrera</span>
+                    <span class="filter-item" data-type="marca" data-value="Versace" onclick="seleccionarFiltro(this)">Versace</span>
+                    <span class="filter-item" data-type="marca" data-value="Paco Rabanne" onclick="seleccionarFiltro(this)">Paco Rabanne</span>
+                    <span class="filter-item" data-type="marca" data-value="Jean Paul Gaultier" onclick="seleccionarFiltro(this)">Jean Paul Gaultier</span>
+                    <span class="filter-item" data-type="marca" data-value="Hugo Boss" onclick="seleccionarFiltro(this)">Hugo Boss</span>
+                    <span class="filter-item" data-type="marca" data-value="Nautica" onclick="seleccionarFiltro(this)">Nautica</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="catalog-header">
+                <span id="info-productos">Cargando catálogo...</span>
+                <div class="sort-by">Ordenar por: <strong>Más vendidos ▼</strong></div>
+            </div>
+
+            <div class="product-grid" id="contenedor-productos">
+    <div class="product-card" data-aroma="Fresco" data-marca="Carolina Herrera">
+        <div class="product-image"><img src="../Perfumeshombres/212carolinaherrerahombre.png" alt="212"></div>
+        <div class="product-info"><h3>212 Carolina HerreraHB</h3><p class="price">$405.000 COP</p><a href="#" class="btn-consultar" data-nombre="212 Carolina HerreraHB">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Carolina Herrera">
+        <div class="product-image"><img src="../Perfumeshombres/212heroeshombre.png" alt="212 Heroes"></div>
+        <div class="product-info"><h3>212 Heroes Carolina Herrera</h3><p class="price">$420.000 COP</p><a href="#" class="btn-consultar" data-nombre="212 Heroes Carolina Herrera">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Carolina Herrera">
+        <div class="product-image"><img src="../Perfumeshombres/carolinasexymen.png" alt="212 Sexy"></div>
+        <div class="product-info"><h3>Carolina Herrera 212 Sexy Men</h3><p class="price">$403.000 COP</p><a href="#" class="btn-consultar" data-nombre="Carolina Herrera 212 Sexy Men">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/versaceeros.png" alt="Versace Eros"></div>
+        <div class="product-info"><h3>Versace Eros</h3><p class="price">$330.000 COP</p><a href="#" class="btn-consultar" data-nombre="Versace Eros">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Paco Rabanne">
+        <div class="product-image"><img src="../Perfumeshombres/invictus.png" alt="Invictus"></div>
+        <div class="product-info"><h3>Invictus</h3><p class="price">$328.000 COP</p><a href="#" class="btn-consultar" data-nombre="Invictus">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Paco Rabanne">
+        <div class="product-image"><img src="../Perfumeshombres/phantom.png" alt="Phantom"></div>
+        <div class="product-info"><h3>Phantom Parfum</h3><p class="price">$443.000 COP</p><a href="#" class="btn-consultar" data-nombre="Phantom Parfum">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/JPle beau.png" alt="Le Beau"></div>
+        <div class="product-info"><h3>Jean Paul Gaultier Le Beau 125ML</h3><p class="price">$430.000 COP</p><a href="#" class="btn-consultar" data-nombre="Jean Paul Gaultier Le Beau 125ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/versaceenergy.png" alt="Versace Energy"></div>
+        <div class="product-info"><h3>Versace Energy</h3><p class="price">$297.000 COP</p><a href="#" class="btn-consultar" data-nombre="Versace Energy">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Hugo Boss">
+        <div class="product-image"><img src="../Perfumeshombres/hugobossgris.png" alt="Hugo Boss"></div>
+        <div class="product-info"><h3>Hugo Boss Bottled Gris 100ml</h3><p class="price">$300.000 COP</p><a href="#" class="btn-consultar" data-nombre="Hugo Boss Bottled Gris 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Lacoste">
+        <div class="product-image"><img src="../Perfumeshombres/lacostered.png" alt="Lacoste Red"></div>
+        <div class="product-info"><h3>Lacoste Red 125ML</h3><p class="price">$234.000 COP</p><a href="#" class="btn-consultar" data-nombre="Lacoste Red 125ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Carolina Herrera">
+        <div class="product-image"><img src="../Perfumeshombres/212vipblack.png" alt="VIP Black"></div>
+        <div class="product-info"><h3>212 Vip Black Carolina Herrera 100ML</h3><p class="price">$385.000 COP</p><a href="#" class="btn-consultar" data-nombre="212 Vip Black Carolina Herrera 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/versacepour.png" alt="Versace Pour"></div>
+        <div class="product-info"><h3>Versace Pour Homme 100ML</h3><p class="price">$314.000 COP</p><a href="#" class="btn-consultar" data-nombre="Versace Pour Homme 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/JPGscandal.png" alt="JPG Scandal"></div>
+        <div class="product-info"><h3>Jean paul Gaultier Scandal 100ML</h3><p class="price">$421.000 COP</p><a href="#" class="btn-consultar" data-nombre="Jean paul Gaultier Scandal 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Lacoste">
+        <div class="product-image"><img src="../Perfumeshombres/lacosteesential.png" alt="Lacoste Essential"></div>
+        <div class="product-info"><h3>Lacoste Essential 125ML</h3><p class="price">$258.000 COP</p><a href="#" class="btn-consultar" data-nombre="Lacoste Essential 125ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Paco Rabanne">
+        <div class="product-image"><img src="../Perfumeshombres/xsPACO.PNG" alt="XS Black"></div>
+        <div class="product-info"><h3>CXS BLACK DE PACO RABANNE 100ML</h3><p class="price">$311.000 COP</p><a href="#" class="btn-consultar" data-nombre="CXS BLACK DE PACO RABANNE 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Paco Rabanne">
+        <div class="product-image"><img src="../Perfumeshombres/ONEMILLION.PNG" alt="One Million"></div>
+        <div class="product-info"><h3>One Millon 100ML</h3><p class="price">$405.000 COP</p><a href="#" class="btn-consultar" data-nombre="One Millon 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Nitro">
+        <div class="product-image"><img src="../Perfumeshombres/nitrointenselyred.png" alt="Nitro Red"></div>
+        <div class="product-info"><h3>Nitro Red Intensely 100ML</h3><p class="price">$265.000 COP</p><a href="#" class="btn-consultar" data-nombre="Nitro Red Intensely 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Montblanc">
+        <div class="product-image"><img src="../Perfumeshombres/montblanclegendspirit.png" alt="Legend Spirit"></div>
+        <div class="product-info"><h3>Mont Blanc Legend Spirit 100ML </h3><p class="price">$302.000 COP</p><a href="#" class="btn-consultar" data-nombre="Mont Blanc Legend Spirit 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Montblanc">
+        <div class="product-image"><img src="../Perfumeshombres/MONTBLANCINDIVIDUALMEN.png" alt="Individual"></div>
+        <div class="product-info"><h3>Mont Blanc Individual 75ML</h3><p class="price">$228.000 COP</p><a href="#" class="btn-consultar" data-nombre="Mont Blanc Individual 75ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Moschino">
+        <div class="product-image"><img src="../Perfumeshombres/moschino toy boy.png" alt="Toy Boy"></div>
+        <div class="product-info"><h3>Moschino Toy Boy 100ML</h3><p class="price">$285.000 COP</p><a href="#" class="btn-consultar" data-nombre="Moschino Toy Boy 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Dolce & Gabbana">
+        <div class="product-image"><img src="../Perfumeshombres/Dolcegabanaligthblue.png" alt="Light Blue"></div>
+        <div class="product-info"><h3>Dolce Gabana Ligth Blue 100ML</h3><p class="price">$325.000 COP</p><a href="#" class="btn-consultar" data-nombre="Dolce Gabana Ligth Blue 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Nautica">
+        <div class="product-image"><img src="../Perfumeshombres/Nautica.png" alt="Nautica Voyage"></div>
+        <div class="product-info"><h3>Nautica Voyage 100ML</h3><p class="price">$102.000 COP</p><a href="#" class="btn-consultar" data-nombre="Nautica Voyage 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Dior">
+        <div class="product-image"><img src="../Perfumeshombres/Sauvage dior elixir.png" alt="Sauvage Elixir"></div>
+        <div class="product-info"><h3>Sauvage Dior Elixir</h3><p class="price">$1.093.000 COP</p><a href="#" class="btn-consultar" data-nombre="Sauvage Dior Elixir">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Ferragamo">
+        <div class="product-image"><img src="../Perfumeshombres/Ferragamo Uomo.png" alt="Uomo"></div>
+        <div class="product-info"><h3>Ferragamo Uomo 100ML</h3><p class="price">$265.000 COP</p><a href="#" class="btn-consultar" data-nombre="Ferragamo Uomo 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Ferragamo">
+        <div class="product-image"><img src="../Perfumeshombres/Ferragamo f black.png" alt="F Black"></div>
+        <div class="product-info"><h3>Ferragamo F Black 100ML</h3><p class="price">$238.000 COP</p><a href="#" class="btn-consultar" data-nombre="Ferragamo F Black 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/Versace Dylanblue.png" alt="Dylan Blue"></div>
+        <div class="product-info"><h3>Versace Dylan Blue 100ML</h3><p class="price">$316.000 COP</p><a href="#" class="btn-consultar" data-nombre="Versace Dylan Blue 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/EROSFLAME.PNG" alt="Eros Flame"></div>
+        <div class="product-info"><h3>Versace Flame 100ML</h3><p class="price">$379.000 COP</p><a href="#" class="btn-consultar" data-nombre="Versace Flame 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Tommy Hilfiger">
+        <div class="product-image"><img src="../Perfumeshombres/Tommy.png" alt="Tommy"></div>
+        <div class="product-info"><h3>Tommy 100ML</h3><p class="price">$221.000 COP</p><a href="#" class="btn-consultar" data-nombre="Tommy 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Armaf">
+        <div class="product-image"><img src="../Perfumeshombres/ClubURBAN.png" alt="Club de Nuit"></div>
+        <div class="product-info"><h3>Club De Nuit Urban</h3><p class="price">$230.000 COP</p><a href="#" class="btn-consultar" data-nombre="Club De Nuit Urban">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Ferragamo">
+        <div class="product-image"><img src="../Perfumeshombres/Ferragamo Signature.png" alt="Signature"></div>
+        <div class="product-info"><h3>Ferragamo Uomo Signature 100ML</h3><p class="price">$275.000 COP</p><a href="#" class="btn-consultar" data-nombre="Ferragamo Uomo Signature 100ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/jpgintense.png" alt="JPG Le Male"></div>
+        <div class="product-info"><h3>Jean Paul Gaultier Le Male Le Perfum intense 125ML</h3><p class="price">$465.000 COP</p><a href="#" class="btn-consultar" data-nombre="Jean Paul Gaultier Le Male Le Perfum intense 125ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/gardenpaul.png" alt="Paradise Garden"></div>
+        <div class="product-info"><h3>Jean Paul Gaultier Le Beau Paradise Garden 125ML</h3><p class="price">$453.000 COP</p><a href="#" class="btn-consultar" data-nombre="Jean Paul Gaultier Le Beau Paradise Garden 125ML">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Armaf">
+        <div class="product-image"><img src="../Perfumeshombres/mandarina.png" alt="Mandarin Sky"></div>
+        <div class="product-info"><h3>Armaf Odyssey Mandarin Sky 100ml</h3><p class="price">$239.000 COP</p><a href="#" class="btn-consultar" data-nombre="Armaf Odyssey Mandarin Sky 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Fresco" data-marca="Antonio Banderas">
+        <div class="product-image"><img src="../Perfumeshombres/Blue Seduction Antonio Banderas 200ml.png" alt="Blue Seduction"></div>
+        <div class="product-info"><h3>Blue Seduction Antonio Banderas 200ml</h3><p class="price">$185.000 COP</p><a href="#" class="btn-consultar" data-nombre="Blue Seduction Antonio Banderas 200ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Nautica">
+        <div class="product-image"><img src="../Perfumeshombres/nautica1.png" alt="Nautica Classic"></div>
+        <div class="product-info"><h3>Nautica Classic 100ml</h3><p class="price">$125.900 COP</p><a href="#" class="btn-consultar" data-nombre="Nautica Classic 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Hugo Boss">
+        <div class="product-image"><img src="../Perfumeshombres/boss.png" alt="Boss In Motion"></div>
+        <div class="product-info"><h3>Boss In Motion 100ml</h3><p class="price">$199.999 COP</p><a href="#" class="btn-consultar" data-nombre="Boss In Motion 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Carolina Herrera">
+        <div class="product-image"><img src="../Perfumeshombres/badboycarolinaherrara.png" alt="Bad Boy"></div>
+        <div class="product-info"><h3>Bad Boy Carolina Herrera</h3><p class="price">$710.000 COP</p><a href="#" class="btn-consultar" data-nombre="Bad Boy Carolina Herrera">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Armani">
+        <div class="product-image"><img src="../Perfumeshombres/acquadigio.png" alt="Acqua di Gio"></div>
+        <div class="product-info"><h3>Acqua Di Gio Giorgio Armani</h3><p class="price">$420.000 COP</p><a href="#" class="btn-consultar" data-nombre="Acqua Di Gio Giorgio Armani">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Armani">
+        <div class="product-image"><img src="../Perfumeshombres/strongerwithyou.png" alt="Stronger With You"></div>
+        <div class="product-info"><h3>Stronger With You Intensely</h3><p class="price">$570.000 COP</p><a href="#" class="btn-consultar" data-nombre="Stronger With You Intensely">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Hermes">
+        <div class="product-image"><img src="../Perfumeshombres/hermes.png" alt="Terre Hermes"></div>
+        <div class="product-info"><h3>Terre D'Hermes 100ml</h3><p class="price">$349.000 COP</p><a href="#" class="btn-consultar" data-nombre="Terre D'Hermes 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Dolce & Gabbana">
+        <div class="product-image"><img src="../Perfumeshombres/lightblueintense.png" alt="Light Blue"></div>
+        <div class="product-info"><h3>Light Blue Intense D&G</h3><p class="price">$465.000 COP</p><a href="#" class="btn-consultar" data-nombre="Light Blue Intense D&G">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Ralph Lauren">
+        <div class="product-image"><img src="../Perfumeshombres/poloblue.png" alt="Polo Blue"></div>
+        <div class="product-info"><h3>Polo Blue Ralph Lauren 125ml</h3><p class="price">$380.000 COP</p><a href="#" class="btn-consultar" data-nombre="Polo Blue Ralph Lauren 125ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/ultramale.png" alt="Ultra Male"></div>
+        <div class="product-info"><h3>Ultramale Jean Paul Gaultier</h3><p class="price">$480.000 COP</p><a href="#" class="btn-consultar" data-nombre="Ultramale Jean Paul Gaultier">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Chanel">
+        <div class="product-image"><img src="../Perfumeshombres/bleuchanel.png" alt="Bleu Chanel"></div>
+        <div class="product-info"><h3>Bleu de Chanel Parfum</h3><p class="price">$1.080.000 COP</p><a href="#" class="btn-consultar" data-nombre="Bleu de Chanel Parfum">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Calvin Klein">
+        <div class="product-image"><img src="../Perfumeshombres/ckone.png" alt="CK One"></div>
+        <div class="product-info"><h3>CK One Calvin Klein 200ml</h3><p class="price">$210.000 COP</p><a href="#" class="btn-consultar" data-nombre="CK One Calvin Klein 200ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Givenchy">
+        <div class="product-image"><img src="../Perfumeshombres/gentleman.png" alt="Givenchy Gentleman"></div>
+        <div class="product-info"><h3>Gentleman Givenchy Reserve Privee</h3><p class="price">$405.000 COP</p><a href="#" class="btn-consultar" data-nombre="Gentleman Givenchy Reserve Privee">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Paco Rabanne">
+        <div class="product-image"><img src="../Perfumeshombres/purexs.png" alt="Pure XS"></div>
+        <div class="product-info"><h3>Pure XS Paco Rabanne</h3><p class="price">$380.000 COP</p><a href="#" class="btn-consultar" data-nombre="Pure XS Paco Rabanne">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Montblanc">
+        <div class="product-image"><img src="../Perfumeshombres/explorer.png" alt="Montblanc Explorer"></div>
+        <div class="product-info"><h3>Montblanc Explorer 100ml</h3><p class="price">$312.000 COP</p><a href="#" class="btn-consultar" data-nombre="Montblanc Explorer 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Valentino">
+        <div class="product-image"><img src="../Perfumeshombres/valentinouomo.png" alt="Valentino Uomo"></div>
+        <div class="product-info"><h3>Valentino Uomo Born In Roma</h3><p class="price">$660.000 COP</p><a href="#" class="btn-consultar" data-nombre="Valentino Uomo Born In Roma">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Narciso Rodriguez">
+        <div class="product-image"><img src="../Perfumeshombres/bleunoir.png" alt="Narciso Rodriguez"></div>
+        <div class="product-info"><h3>Narciso Rodriguez Bleu Noir</h3><p class="price">$395.000 COP</p><a href="#" class="btn-consultar" data-nombre="Narciso Rodriguez Bleu Noir">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Versace">
+        <div class="product-image"><img src="../Perfumeshombres/erosflame.png" alt="Eros Flame"></div>
+        <div class="product-info"><h3>Eros Flame Versace 100ml</h3><p class="price">$375.000 COP</p><a href="#" class="btn-consultar" data-nombre="Eros Flame Versace 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Halloween">
+        <div class="product-image"><img src="../Perfumeshombres/halloweenhero.png" alt="Halloween Hero"></div>
+        <div class="product-info"><h3>Halloween Man Hero 125ml</h3><p class="price">Sin stock </p><a href="#" class="btn-consultar" data-nombre="Halloween Man Hero 125ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="YSL">
+        <div class="product-image"><img src="../Perfumeshombres/yslparfum.png" alt="YSL Parfum"></div>
+        <div class="product-info"><h3>Y Le Parfum YSL 100ml</h3><p class="price">$539.000 COP</p><a href="#" class="btn-consultar" data-nombre="Y Le Parfum YSL 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Dulce" data-marca="Azzaro">
+        <div class="product-image"><img src="../Perfumeshombres/wantednight.png" alt="Azzaro Wanted"></div>
+        <div class="product-info"><h3>Azzaro Wanted By Night</h3><p class="price">$425.000 COP</p><a href="#" class="btn-consultar" data-nombre="Azzaro Wanted By Night">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Amaderado" data-marca="Jean Paul Gaultier">
+        <div class="product-image"><img src="../Perfumeshombres/scandallemale.png" alt="Scandal Male"></div>
+        <div class="product-info"><h3>Le Male Elixir JPG 100ml</h3><p class="price">$590.000 COP</p><a href="#" class="btn-consultar" data-nombre="Le Male Elixir JPG 100ml">Consultar</a></div>
+    </div>
+    <div class="product-card" data-aroma="Cítrico" data-marca="Issey Miyake">
+        <div class="product-image"><img src="../Perfumeshombres/isseymiyake.png" alt="Issey Miyake"></div>
+        <div class="product-info"><h3>L'Eau d'Issey Issey Miyake</h3><p class="price">$279.000 COP</p><a href="#" class="btn-consultar" data-nombre="L'Eau d'Issey Issey Miyake">Consultar</a></div>
+    </div>
+</div>
+
+            <div class="pagination" id="paginacion"></div>
+        </section>
+    </main>
+
+    <section class="slider">
+        <h3>El Sello de la Originalidad</h3>
+        <div class="slide-track">
+            <div class="slide"><img src="/Slider/Lversace.png" alt="Versace"></div>
+            <div class="slide"><img src="/Slider/armaf.jpg" alt="Armaf"></div>
+            <div class="slide"><img src="/Slider/Chanel.png" alt="Chanel"></div>
+            <div class="slide"><img src="/Slider/bhararaa.jpg" alt="Bharara"></div>
+            <div class="slide"><img src="/Slider/Bvlgari.png" alt="Bvlgari"></div>
+            <div class="slide"><img src="/Slider/R.PNG" alt="Lattafa"></div>
+            <div class="slide"><img src="/Slider/Hugo.png" alt="Hugo Boss"></div>
+            <div class="slide"><img src="/Slider/Paco.png" alt="PACO"></div>
+            <div class="slide"><img src="/Slider/Dior.jpg" alt="Dior"></div>
+        </div>
+    </section>
+
+    <footer class="footer-main">
+        <div class="footer-content container">
+            <div class="footer-logo-section">
+                <div class="logo">
+                    <h1 style="color:white">Pili</h1>
+                    <p>PERFUMERÍA</p>
+                </div>
+                <p style="margin-top:20px; color:#ccc;">Fragancias originales que resaltan tu esencia.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Menú</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="Nicho.html">Nicho</a></li>
+                    <li><a href="Hombre.html">Hombre</a></li>
+                    <li><a href="Mujer.html">Mujer</a></li>
+                    
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contáctanos</h4>
+               <style>
+    .footer-contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateX(10px); /* Efecto de movimiento al pasar el mouse */
+    }
+
+    .icon-box {
+        width: 35px;
+        height: 35px;
+        background: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-item svg {
+        width: 18px;
+        height: 18px;
+        fill: #fff; /* Color del icono */
+    }
+
+    .contact-item span {
+        font-size: 0.95rem;
+        color: #ddd;
+    }
+
+    .contact-item a {
+        text-decoration: none;
+        color: #ddd;
+        transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+        color: #fff; /* Brilla al pasar el mouse */
+    }
+</style>
+
+<div class="footer-contact">
+    
+    <div class="footer-contact-list">
+        
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span>Bogotá, Colombia</span>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <a href="https://wa.me/573132389523" target="_blank">+57 313 238 9523</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <a href="mailto:piliperfumeriaq@gmail.com">piliperfumeriaq@gmail.com</a>
+        </div>
+
+    </div>
+</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const porPagina = 15;
+        let paginaActual = 1;
+        let filtrosSeleccionados = {
+            aroma: 'todos',
+            marca: 'todos'
+        };
+
+        function seleccionarFiltro(elemento) {
+            const tipo = elemento.getAttribute('data-type');
+            const valor = elemento.getAttribute('data-value');
+
+            // Quitar clase active de los hermanos
+            const hermanos = elemento.parentElement.querySelectorAll('.filter-item');
+            hermanos.forEach(h => h.classList.remove('active'));
+            elemento.classList.add('active');
+
+            // Actualizar objeto de filtros
+            filtrosSeleccionados[tipo] = valor;
+            aplicarFiltros();
+        }
+
+        function aplicarFiltros() {
+            const contenedor = document.getElementById('contenedor-productos');
+            const productos = Array.from(contenedor.querySelectorAll('.product-card'));
+            
+            const min = parseInt(document.getElementById('min-price').value) || 0;
+            const max = parseInt(document.getElementById('max-price').value) || Infinity;
+
+            productos.forEach(card => {
+                const precio = parseInt(card.querySelector('.price').innerText.replace(/[^0-9]/g, '')) || 0;
+                const aroma = card.getAttribute('data-aroma');
+                const marca = card.getAttribute('data-marca');
+
+                const cumplePrecio = precio >= min && precio <= max;
+                const cumpleAroma = (filtrosSeleccionados.aroma === 'todos' || aroma === filtrosSeleccionados.aroma);
+                const cumpleMarca = (filtrosSeleccionados.marca === 'todos' || marca === filtrosSeleccionados.marca);
+
+                if (cumplePrecio && cumpleAroma && cumpleMarca) {
+                    card.classList.remove('hidden-filter');
+                } else {
+                    card.classList.add('hidden-filter');
+                }
+            });
+
+            renderizarPaginacion();
+        }
+
+        function renderizarPaginacion() {
+            const contenedor = document.getElementById('contenedor-productos');
+            const productosVisibles = Array.from(contenedor.querySelectorAll('.product-card:not(.hidden-filter)'));
+            const totalPaginas = Math.ceil(productosVisibles.length / porPagina);
+            
+            if (paginaActual > totalPaginas) paginaActual = 1;
+
+            function mostrarPagina(n) {
+                paginaActual = n;
+                const inicio = (n - 1) * porPagina;
+                const fin = n * porPagina;
+
+                // Ocultar todos primero
+                Array.from(contenedor.querySelectorAll('.product-card')).forEach(p => p.style.display = 'none');
+
+                // Mostrar solo los filtrados que entran en la página
+                productosVisibles.forEach((p, index) => {
+                    if (index >= inicio && index < fin) {
+                        p.style.display = 'block';
+                    }
+                });
+
+                document.getElementById('info-productos').innerText = `Mostrando ${productosVisibles.length} productos (Pág ${n} de ${totalPaginas || 1})`;
+                
+                // Generar botones
+                const botonesDiv = document.getElementById('paginacion');
+                botonesDiv.innerHTML = '';
+                for(let i = 1; i <= totalPaginas; i++) {
+                    const btn = document.createElement('a');
+                    btn.href = "#"; btn.innerText = i;
+                    btn.className = (i === paginaActual) ? 'active' : '';
+                    btn.onclick = (e) => { 
+                        e.preventDefault(); 
+                        mostrarPagina(i); 
+                        window.scrollTo({top: 0, behavior: 'smooth'}); 
+                    };
+                    botonesDiv.appendChild(btn);
+                }
+            }
+
+            if (productosVisibles.length > 0) {
+                mostrarPagina(paginaActual);
+            } else {
+                document.getElementById('info-productos').innerText = "No se encontraron productos.";
+                document.getElementById('paginacion').innerHTML = '';
+                Array.from(contenedor.querySelectorAll('.product-card')).forEach(p => p.style.display = 'none');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            aplicarFiltros(); // Inicializa todo
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Tu número de WhatsApp (cámbialo aquí)
+    const numeroWhatsApp = "573000000000"; 
+
+    // Seleccionamos todos los botones de consultar
+    const botonesConsultar = document.querySelectorAll('.btn-consultar');
+
+    botonesConsultar.forEach(boton => {
+        // Obtenemos el nombre del perfume desde el atributo data-nombre o desde el H3
+        const nombrePerfume = boton.getAttribute('data-nombre') || boton.parentElement.querySelector('h3').innerText;
+        
+        // Creamos el mensaje personalizado
+        const mensaje = encodeURIComponent(`¡Hola Pili Perfumería! Me interesa consultar la disponibilidad del perfume: ${nombrePerfume}`);
+        
+        // Asignamos el enlace final al botón
+        boton.href = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+        boton.setAttribute('target', '_blank');
+    });
+});
+    </script>
+</body>
+</html>

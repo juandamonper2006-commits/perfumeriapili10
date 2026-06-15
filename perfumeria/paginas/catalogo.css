@@ -1,0 +1,395 @@
+/* --- Reset y Estilos Base --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.6; }
+
+/* --- Header --- */
+header { background-color: #5a0f2e; color: white; padding: 20px 0; text-align: center; }
+.top-nav { display: flex; justify-content: space-around; align-items: center; max-width: 1200px; margin: 0 auto; }
+.logo h1 { font-size: 28px; letter-spacing: 5px; font-weight: 300; text-transform: uppercase; }
+.logo p { font-size: 10px; letter-spacing: 3px; color: #aaa; margin-top: -5px; }
+.main-menu a { color: white; text-decoration: none; margin: 0 15px; font-size: 13px; letter-spacing: 1px; }
+.main-menu a.active { border-bottom: 1px solid white; padding-bottom: 5px; }
+
+/* --- Layout --- */
+.container { 
+    display: flex; 
+    max-width: 1200px; /* Volvimos al tamaño estándar para que no se vea gigante */
+    margin: 40px auto; 
+    gap: 30px; 
+    padding: 0 20px; 
+}
+
+/* --- Filtros --- */
+.filters { width: 220px; flex-shrink: 0; }
+.filter-group { border-top: 1px solid #eee; padding: 20px 0; }
+.filter-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; cursor: pointer; }
+.price-inputs { display: flex; gap: 10px; margin-top: 15px; }
+.input-box { border: 1px solid #ddd; padding: 8px; width: 50%; }
+.input-box input { border: none; width: 100%; outline: none; font-size: 12px; }
+
+/* --- Catálogo (5 Columnas) --- */
+.products-section { flex-grow: 1; }
+.catalog-header { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 13px; color: #666; }
+
+#contenedor-productos, .product-grid { 
+    display: grid !important; 
+    grid-template-columns: repeat(5, 1fr) !important; 
+    gap: 15px; 
+    margin-bottom: 60px; 
+}
+
+/* --- Cards de Producto --- */
+.product-info h3 {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #333;
+    /* Esto permite que el nombre crezca hacia abajo */
+    min-height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    overflow: visible; /* Asegura que nada se corte */
+}
+
+.product-card {
+    height: auto; /* Permite que la tarjeta crezca si el texto es largo */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
+.product-image { 
+    background-color: #f9f9f9; 
+    margin-bottom: 15px; 
+    height: 180px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+}
+
+.product-image img { 
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: contain; 
+}
+
+/* --- Información de Texto --- */
+.product-info h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 5px 0;
+    height: 2.4em;
+    overflow: hidden;
+}
+
+.brand { font-size: 0.75rem; color: #888; margin-bottom: 5px; }
+
+.price {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #6a1b31; /* Color burdeos */
+}
+
+/* --- BOTONES (REGLA IMPORTANTE) --- */
+
+/* Botón Negro Estándar */
+button, .btn-add { 
+    width: 100%; 
+    padding: 10px; 
+    border: none; 
+    background: #000; 
+    color: #fff; 
+    cursor: pointer; 
+    font-size: 11px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s; 
+}
+
+button:hover, .btn-add:hover { background: #5a0f2e; }
+
+/* BOTÓN DE WHATSAPP (ÓVALO BURDEOS) */
+.btn-consultar-ws {
+    display: inline-block !important;
+    background-color: #6a1b31 !important;
+    color: #fff !important;
+    padding: 10px 30px !important;
+    border-radius: 25px !important; /* Más redondeado para que sea óvalo */
+    text-decoration: none !important; /* Quita el subrayado azul */
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: none;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: fit-content; /* Se ajusta al texto */
+    align-self: center; /* Lo centra dentro de la card */
+}
+
+.btn-consultar-ws:hover {
+    background-color: #4a1022 !important;
+}
+
+/* --- Paginación --- */
+.pagination { display: flex; justify-content: center; align-items: center; gap: 15px; padding: 40px 0; border-top: 1px solid #eee; }
+.pagination a { text-decoration: none; color: #888; font-size: 14px; padding: 5px 10px; }
+.pagination a.active { color: #000; font-weight: bold; border-bottom: 2px solid #5a0f2e; }
+
+/* Extras */
+.whatsapp-btn { position: fixed; bottom: 25px; right: 25px; width: 60px; z-index: 1000; }
+
+/* --- Responsivo --- */
+@media (max-width: 1100px) {
+    #contenedor-productos, .product-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 700px) {
+    #contenedor-productos, .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .container { flex-direction: column; }
+    .filters { width: 100%; }
+}
+
+/* --- FOOTER STYLES --- */
+.footer-container {
+    margin-top: 50px;
+    width: 100%;
+}
+
+/* Banner de Marcas */
+.brands-banner {
+    padding: 40px 0;
+    text-align: center;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+.brands-title {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: #4a0e1e; /* Color vino tinto de tu logo */
+    margin-bottom: 30px;
+}
+
+.brands-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    opacity: 0.8;
+}
+
+.brands-logos img {
+    height: 40px; /* Ajusta según tus imágenes */
+    filter: grayscale(100%);
+    transition: 0.3s;
+}
+
+.brands-logos img:hover {
+    filter: grayscale(0%);
+}
+
+/* Footer Oscuro */
+.footer-main {
+    background-color: #1a050a; /* Negro muy rojizo/oscuro */
+    color: #fff;
+    padding: 60px 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 40px;
+}
+
+.footer-logo {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.footer-links h4, .footer-contact h4 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.footer-links ul, .footer-contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.footer-contact ul li {
+    margin-bottom: 12px;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* --- SLIDER DE MARCAS PROFESIONAL --- */
+.slider {
+    width: 100%;
+    overflow: hidden;
+    padding: 60px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.slider h3 { 
+    margin-bottom: 40px; 
+    color: #5a0f2e; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-size: 18px;
+}
+
+.slide-track {
+    display: flex;
+    width: calc(250px * 14); /* Ajustado para el movimiento infinito */
+    animation: scroll 40s linear infinite;
+}
+
+.slide {
+    width: 250px;       /* Ancho fijo para que todos ocupen lo mismo */
+    height: 100px;      /* Alto fijo para alinear verticalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 20px;
+}
+
+.slide img {
+    max-width: 100%;    /* La imagen nunca se saldrá de su caja de 250px */
+    max-height: 100%;   /* La imagen nunca se saldrá de su caja de 100px */
+    object-fit: contain; /* ESTO ES LO QUE HACE QUE TODOS SE VEAN IGUAL */
+    filter: grayscale(100%);
+    transition: 0.3s;
+}
+
+.slide img:hover {
+    filter: grayscale(0%);
+    transform: scale(1.1);
+}
+
+/* --- ANIMACIÓN DEL SLIDER --- */
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 7)); } 
+    /* Nota: El número 7 debe ser la mitad de tus logos totales en el HTML para que el ciclo sea infinito y fluido */
+}
+
+/* Aseguramos que el track se vea en una sola línea */
+.slide-track {
+    display: flex;
+    width: calc(250px * 14); /* 250px por cada logo (incluyendo los duplicados) */
+    animation: scroll 40s linear infinite;
+}
+
+/* Pausar al pasar el mouse para que el cliente pueda ver bien una marca */
+.slide-track:hover {
+    animation-play-state: paused;
+}
+
+/* Estilo para el botón Consultar en el catálogo */
+.btn-consultar {
+    display: inline-block !important;
+    background-color: #000 !important;
+    color: white !important;
+    padding: 7px 7px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    transition: 0.3s !important;
+    border: none !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.btn-consultar:hover {
+    background-color: #4a1022 !important;
+}
+.product-info h3 {
+    min-height: 45px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Quita los puntos de las listas de filtros */
+.filter-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Estilo para los enlaces de los filtros */
+.filter-list li a {
+    text-decoration: none;
+    color: #333; /* Gris oscuro como en hombre */
+    display: block;
+    padding: 5px 0;
+    font-size: 14px;
+    border-left: 3px solid transparent; /* Para el efecto de selección */
+    padding-left: 10px;
+}
+
+/* El filtro seleccionado (ej: 'Todos') */
+.filter-list li a.active {
+    font-weight: bold;
+    border-left: 3px solid #000; /* La rayita negra lateral */
+}
+
+/* Estilo para el logo del Footer */
+.footer-logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el logo y el texto */
+    text-align: center;
+}
+
+.footer-logo {
+    width: 180px; /* Tamaño más grande y visible */
+    height: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.3)); /* Brillo sutil blanco alrededor */
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05); /* Agranda un poquito al pasar el mouse */
+    filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.5)); /* Brilla más al hacer hover */
+}
+
+.footer-logo-section p {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #ccc;
+    letter-spacing: 1px; /* Espaciado elegante entre letras */
+    max-width: 250px;
+}

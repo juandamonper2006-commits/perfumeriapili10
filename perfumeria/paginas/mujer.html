@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mujer - Pili Perfumería</title>
+    <link rel="stylesheet" href="catalogo.css">
+</head>
+<body>
+
+    <header>
+        <div class="top-nav">
+            <div class="logo">
+                <h1>PILI</h1>
+                <p>PERFUMERÍA</p>
+            </div>
+            <nav class="main-menu">
+                <a href="../index.html">INICIO</a>
+                <a href="Hombre.html">HOMBRE</a>
+                <a href="Mujer.html" class="active">MUJER</a>
+                <a href="nicho.html" >NICHO</a>
+                <a href="arabe.html" >ARABE</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="filters">
+            <h3>Filtrar:</h3>
+            
+            <div class="filter-group">
+                <div class="filter-header">Precio <span>▲</span></div>
+                <div class="price-inputs">
+                    <div class="input-box"><input type="number" id="min-price" placeholder="De" oninput="filtrarProductos()"></div>
+                    <div class="input-box"><input type="number" id="max-price" placeholder="Para" oninput="filtrarProductos()"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Aroma <span>▼</span></div>
+                <ul class="filter-list" id="filter-aroma">
+                    <li><a href="#" onclick="filtrarPorAroma('Todos')">Todos</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Cítrico')">Cítrico</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Amaderado')">Amaderado</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Dulce')">Dulce</a></li>
+                    <li><a href="#" onclick="filtrarPorAroma('Fresco')">Fresco</a></li>
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-header">Marca <span>▼</span></div>
+                <ul class="filter-list" id="filter-marca">
+                    <li><a href="#" onclick="filtrarPorMarca('Todas')">Todas</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Carolina Herrera')">Carolina Herrera</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Versace')">Versace</a></li>
+                    <li><a href="#" onclick="filtrarPorMarca('Paris Hilton')">Paris Hilton</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="products-section">
+            <div class="catalog-header">
+                <span id="info-productos">Cargando catálogo...</span>
+                <div class="sort-by">Ordenar por: <strong>Más vendidos ▼</strong></div>
+            </div>
+
+            <div class="product-grid" id="contenedor-productos"></div>
+
+            <div class="pagination" id="paginacion"></div>
+        </section>
+    </main>
+
+    <script>
+        // Lista completa de productos con el campo 'aroma' añadido para que el filtro funcione
+        const productosMujer = [
+            { nombre: "212 Tradicional", marca: "Carolina Herrera", aroma: "Fresco", precio: 350000, img: "../perfumesmujeres/212tradicional.png" },
+            { nombre: "Individual", marca: "Mont Blanc", aroma: "Dulce", precio: 210000, img: "../perfumesmujeres/montblancmujer.png" },
+            { nombre: "212 Vip Rose 80ml", marca: "Carolina Herrera", aroma: "Dulce", precio: 120000, img: "../perfumesmujeres/212vip.png" },
+            { nombre: "Tradicional", marca: "Paris Hilton", aroma: "Fresco", precio: 200000, img: "../perfumesmujeres/parishilton.png" },
+            { nombre: "Funny 100ml", marca: "Moschino", aroma: "Cítrico", precio: 223500, img: "../perfumesmujeres/moshinofunny.png" },
+            { nombre: "I Love love 100ml", marca: "Moschino", aroma: "Cítrico", precio: 245000, img: "../perfumesmujeres/moschinolove.png" },
+            { nombre: "Marshmallow Blush 100 ml", marca: "Paris Corner", aroma: "Dulce", precio: 264000, img: "../perfumesmujeres/pariscorner.png" },
+            { nombre: "Gold Rush 100ml", marca: "Paris Hilton", aroma: "Dulce", precio: 208000, img: "../perfumesmujeres/goldrush.png" },
+            { nombre: "Heires 100 ml", marca: "Paris Hilton", aroma: "Dulce", precio: 225000, img: "../perfumesmujeres/heires.png" },
+            { nombre: "Scandal 80ml", marca: "Jean Paul Galtier", aroma: "Dulce", precio: 412000, img: "../perfumesmujeres/scanldarmujer.png" },
+            { nombre: "cloud pink 100ml", marca: "Ariana Grande", aroma: "Dulce", precio: 339000, img: "../perfumesmujeres/cloudpink.png" },
+            { nombre: "Mod Vanilla 100ml", marca: "Ariana Grande", aroma: "Dulce", precio: 340000, img: "../perfumesmujeres/modvanilla.png" },
+            { nombre: "Boucheron 100ml", marca: "Boucheron", aroma: "Amaderado", precio: 220000, img: "../perfumesmujeres/boucheron.png" },
+            { nombre: "Light blue 100ml", marca: "Dolce Gabanna", aroma: "Cítrico", precio: 310000, img: "../perfumesmujeres/dolcegabana.png" },
+            { nombre: "Coco Mademoiselle", marca: "Chanel", aroma: "Fresco", precio: 1340000, img: "../perfumesmujeres/cocochanel.png" },
+            { nombre: "Signorina 100ml", marca: "Ferragamo", aroma: "Fresco", precio: 285000, img: "../perfumesmujeres/ferragamo.png" },
+            { nombre: "Signorina Ribelle Salvatore", marca: "Ferragamo", aroma: "Dulce", precio: 299000, img: "../perfumesmujeres/ferragamo1.png" },
+            { nombre: "Dylan Purple 100ml", marca: "Versace", aroma: "Cítrico", precio: 415000, img: "../perfumesmujeres/versace.png" },
+            { nombre: "Dama 100ml", marca: "Tommy", aroma: "Fresco", precio: 218000, img: "../perfumesmujeres/tommydama.png" },
+            { nombre: "Yellow Diamond 90ml", marca: "Versace", aroma: "Cítrico", precio: 315000, img: "../perfumesmujeres/versaceamarillo.png" },
+            { nombre: "Bright Crystal", marca: "Versace", aroma: "Fresco", precio: 325000, img: "../perfumesmujeres/brightcrystal.png" },
+            { nombre: "Good Girl Tradicional", marca: "Carolina Herrera", aroma: "Dulce", precio: 583000, img: "../perfumesmujeres/goodgirl.png" },
+            { nombre: "La Vie Est Belle", marca: "Lancôme", aroma: "Dulce", precio: 423000, img: "../perfumesmujeres/lavieestbelle.png" },
+            { nombre: "Can Can", marca: "Paris Hilton", aroma: "Dulce", precio: 155000, img: "../perfumesmujeres/cancan.png" },
+            { nombre: "Cloud Tradicional", marca: "Ariana Grande", aroma: "Dulce", precio: 338000, img: "../perfumesmujeres/cloud.png" },
+            { nombre: "Toy 2 (Osito)", marca: "Moschino", aroma: "Fresco", precio: 355000, img: "../perfumesmujeres/toy2.png" },
+            { nombre: "Black Opium", marca: "YSL", aroma: "Dulce", precio: 430000, img: "../perfumesmujeres/blackopium.png" },
+            { nombre: "Olympéa", marca: "Paco Rabanne", aroma: "Fresco", precio: 415000, img: "../perfumesmujeres/olympea.png" },
+            { nombre: "Idôle", marca: "Lancôme", aroma: "Fresco", precio: 550000, img: "../perfumesmujeres/idole.png" },
+            { nombre: "L'Interdit", marca: "Givenchy", aroma: "Amaderado", precio: 378000, img: "../perfumesmujeres/linterdit.png" },
+            { nombre: "CK In 2U", marca: "Calvin Klein", aroma: "Cítrico", precio: 149000, img: "../perfumesmujeres/klein.png" }
+        ];
+
+        
+
+        let productosFiltrados = [...productosMujer];
+        const porPagina = 15;
+        let paginaActual = 1;
+        const numeroWhatsApp = "573000000000";
+
+        let filtroAroma = "Todos";
+        let filtroMarca = "Todas";
+
+        function filtrarPorAroma(aroma) {
+            filtroAroma = aroma;
+            filtrarProductos();
+        }
+
+        function filtrarPorMarca(marca) {
+            filtroMarca = marca;
+            filtrarProductos();
+        }
+
+        function filtrarProductos() {
+            const min = parseInt(document.getElementById('min-price').value) || 0;
+            const max = parseInt(document.getElementById('max-price').value) || Infinity;
+
+            productosFiltrados = productosMujer.filter(p => {
+                const cumplePrecio = p.precio >= min && p.precio <= max;
+                const cumpleAroma = filtroAroma === "Todos" || p.aroma === filtroAroma;
+                const cumpleMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
+                return cumplePrecio && cumpleAroma && cumpleMarca;
+            });
+
+            renderizarPagina(1);
+        }
+
+        function renderizarPagina(n) {
+            paginaActual = n;
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = '';
+
+            const inicio = (n - 1) * porPagina;
+            const fin = n * porPagina;
+            const visibles = productosFiltrados.slice(inicio, fin);
+
+            visibles.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${p.img}" alt="${p.nombre}">
+                    </div>
+                    <div class="product-info">
+                        <p class="brand-label">${p.marca}</p>
+                        <h3>${p.nombre}</h3>
+                        <p class="price">$${p.precio.toLocaleString('es-CO')} COP</p>
+                        <a href="#" class="btn-consultar" data-nombre="${p.nombre}">CONSULTAR</a>
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            });
+
+            const botones = document.querySelectorAll('.btn-consultar');
+            botones.forEach(btn => {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    const msg = encodeURIComponent(`¡Hola! Me interesa el perfume para mujer: ${btn.dataset.nombre}`);
+                    window.open(`https://wa.me/${numeroWhatsApp}?text=${msg}`, '_blank');
+                };
+            });
+
+            actualizarBotonesPaginacion();
+            document.getElementById('info-productos').innerText = `Mostrando ${productosFiltrados.length} productos (Pág ${n} de ${Math.ceil(productosFiltrados.length / porPagina)})`;
+        }
+
+        function actualizarBotonesPaginacion() {
+            const pagDiv = document.getElementById('paginacion');
+            pagDiv.innerHTML = '';
+            const total = Math.ceil(productosFiltrados.length / porPagina);
+
+            for (let i = 1; i <= total; i++) {
+                const btn = document.createElement('a');
+                btn.innerText = i;
+                btn.className = (i === paginaActual) ? 'active' : '';
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    renderizarPagina(i);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                };
+                pagDiv.appendChild(btn);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderizarPagina(1));
+    </script>
+
+    <section class="slider">
+        <h3>El Sello de la Originalidad</h3>
+        <div class="slide-track">
+            <div class="slide"><img src="/Slider/Lversace.png" alt="Versace"></div>
+            <div class="slide"><img src="/Slider/armaf.jpg" alt="Armaf"></div>
+            <div class="slide"><img src="/Slider/Chanel.png" alt="Chanel"></div>
+            <div class="slide"><img src="/Slider/bhararaa.jpg" alt="Bharara"></div>
+            <div class="slide"><img src="/Slider/Bvlgari.png" alt="Bvlgari"></div>
+            <div class="slide"><img src="/Slider/R.PNG" alt="Lattafa"></div>
+            <div class="slide"><img src="/Slider/Hugo.png" alt="Hugo Boss"></div>
+            <div class="slide"><img src="/Slider/Paco.png" alt="PACO"></div>
+            <div class="slide"><img src="/Slider/Dior.jpg" alt="Dior"></div>
+        </div>
+    </section>
+
+    <footer class="footer-main">
+        <div class="footer-content container">
+            <div class="footer-logo-section">
+                <div class="logo">
+                    <h1 style="color:white">Pili</h1>
+                    <p>PERFUMERÍA</p>
+                </div>
+                <p style="margin-top:20px; color:#ccc;">Fragancias originales que resaltan tu esencia.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Menú</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="Nicho.html">Nicho</a></li>
+                    <li><a href="Hombre.html">Hombre</a></li>
+                    <li><a href="Mujer.html">Mujer</a></li>
+                    
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contáctanos</h4>
+                <style>
+    .footer-contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+        transform: translateX(10px); /* Efecto de movimiento al pasar el mouse */
+    }
+
+    .icon-box {
+        width: 35px;
+        height: 35px;
+        background: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-item svg {
+        width: 18px;
+        height: 18px;
+        fill: #fff; /* Color del icono */
+    }
+
+    .contact-item span {
+        font-size: 0.95rem;
+        color: #ddd;
+    }
+
+    .contact-item a {
+        text-decoration: none;
+        color: #ddd;
+        transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+        color: #fff; /* Brilla al pasar el mouse */
+    }
+</style>
+
+<div class="footer-contact">
+    <div class="footer-contact-list">
+        
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span>Bogotá, Colombia</span>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <a href="https://wa.me/573132389523" target="_blank">+57 313 238 9523</a>
+        </div>
+
+        <div class="contact-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <a href="mailto:piliperfumeriaq@gmail.com">piliperfumeriaq@gmail.com</a>
+        </div>
+
+    </div>
+</div>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
