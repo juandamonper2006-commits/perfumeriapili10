@@ -623,12 +623,33 @@ body{
 /* PERFUMES */
 
 .perfume-grid{
-    grid-template-columns:1fr;
-    gap:25px;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    padding:10px;
 }
 
 .perfume-card{
     width:100%;
+}
+
+.perfume-card img{
+    height:180px;
+    padding:10px;
+    object-fit:contain;
+}
+
+.perfume-card h3{
+    font-size:15px;
+    padding:0 8px;
+}
+
+.perfume-card p{
+    font-size:15px;
+}
+
+.perfume-card a{
+    font-size:13px !important;
+    padding:8px 15px !important;
 }
 
 /* SLIDER */
