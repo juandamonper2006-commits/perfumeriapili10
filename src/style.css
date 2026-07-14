@@ -532,3 +532,136 @@ body { font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; 
     border-radius: 50%;
     margin-left: -5px;
 }
+
+/* ==========================================
+   RESPONSIVE PROFESIONAL - CELULARES
+========================================== */
+
+@media screen and (max-width:768px){
+
+body{
+    overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:auto;
+    padding:20px;
+    gap:20px;
+}
+
+.logo img{
+    height:150px;
+    margin-top:0;
+}
+
+.header-center{
+    font-size:10px;
+    letter-spacing:2px;
+    text-align:center;
+}
+
+.catalogo-badge{
+    width:100%;
+    max-width:280px;
+}
+
+/* MENU */
+
+.menu{
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.menu a{
+    font-size:15px;
+}
+
+/* HERO */
+
+.hero{
+    height:60vh;
+}
+
+.hero-title{
+    font-size:42px;
+}
+
+.hero-subtitle{
+    font-size:14px;
+    letter-spacing:2px;
+    padding:0 20px;
+}
+
+/* DESTACADOS */
+
+.destacados{
+    padding:50px 20px;
+}
+
+.destacados h2{
+    font-size:30px;
+}
+
+/* PERFUMES */
+
+.perfume-grid{
+    grid-template-columns:1fr;
+    gap:25px;
+}
+
+.perfume-card{
+    width:100%;
+}
+
+/* SLIDER */
+
+.slide{
+    width:170px;
+    height:80px;
+}
+
+.slide-track{
+    animation-duration:30s;
+}
+
+/* FOOTER */
+
+.footer-container{
+    flex-direction:column;
+    text-align:center;
+}
+
+.footer-logo img{
+    width:180px;
+}
+
+.footer-links{
+    align-items:center;
+}
+
+/* WHATSAPP */
+
+.whatsapp-container{
+    right:15px;
+    bottom:15px;
+}
+
+.whatsapp-message{
+    display:none;
+}
+
+.whatsapp-float{
+    width:55px;
+    height:55px;
+}
+
+.whatsapp-float img{
+    width:28px;
+}
+
+}
