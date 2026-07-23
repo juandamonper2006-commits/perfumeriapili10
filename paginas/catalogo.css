@@ -416,10 +416,10 @@ button:hover, .btn-add:hover { background: #5a0f2e; }
     }
 
     #contenedor-productos,
-    .product-grid{
-        grid-template-columns:repeat(2,1fr) !important;
-        gap:10px;
-    }
+.product-grid{
+    grid-template-columns: repeat(3,1fr) !important;
+    gap:8px;
+}
 
     .catalog-header{
         flex-direction:column;
