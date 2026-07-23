@@ -729,3 +729,54 @@ body{
 }
 
 }
+/* ===== FOOTER RESPONSIVE - 3 COLUMNAS ===== */
+
+@media screen and (max-width:768px){
+
+    .footer-container{
+        display:grid !important;
+        grid-template-columns:repeat(3,1fr);
+        gap:15px;
+        align-items:flex-start;
+        text-align:left;
+        padding:20px 15px;
+    }
+
+    .footer-logo{
+        display:none;
+    }
+
+    .footer-links,
+    .footer-contact{
+        width:100%;
+    }
+
+    .footer-links h3,
+    .footer-contact h4{
+        font-size:20px;
+        margin-bottom:12px;
+    }
+
+    .footer-links a,
+    .footer-links summary,
+    .footer-contact span,
+    .footer-contact a{
+        font-size:13px;
+    }
+
+    .contact-item{
+        margin-bottom:10px;
+    }
+
+    .icon-box{
+        width:30px;
+        height:30px;
+        margin-right:8px;
+    }
+
+    .footer-bottom{
+        text-align:center;
+        font-size:12px;
+    }
+
+}
