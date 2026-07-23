@@ -406,7 +406,7 @@ button:hover, .btn-add:hover { background: #5a0f2e; }
     }
 
     .filters{
-        width:110px !important;
+        width:85px !important;
         flex-shrink:0;
     }
 
@@ -442,6 +442,23 @@ button:hover, .btn-add:hover { background: #5a0f2e; }
         width:100%;
     }
 
+}
+.product-image{
+    height:90px !important;
+}
+
+.product-info h3{
+    font-size:10px !important;
+    min-height:30px !important;
+}
+
+.price{
+    font-size:11px !important;
+}
+
+.btn-consultar{
+    font-size:9px !important;
+    padding:6px !important;
 }
 
 /* ===== FOOTER CELULAR ===== */
