@@ -393,3 +393,81 @@ button:hover, .btn-add:hover { background: #5a0f2e; }
     letter-spacing: 1px; /* Espaciado elegante entre letras */
     max-width: 250px;
 }
+
+/* ===== CATÁLOGO RESPONSIVE ===== */
+@media screen and (max-width:768px){
+
+    .container{
+        display:flex !important;
+        flex-direction:row !important;
+        align-items:flex-start;
+        gap:15px;
+        padding:0 10px;
+    }
+
+    .filters{
+        width:110px !important;
+        flex-shrink:0;
+    }
+
+    .products-section{
+        flex:1;
+        min-width:0;
+    }
+
+    #contenedor-productos,
+    .product-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+        gap:10px;
+    }
+
+    .catalog-header{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .filter-header{
+        font-size:13px;
+    }
+
+    .filter-list li a{
+        font-size:12px;
+    }
+
+    .price-inputs{
+        flex-direction:column;
+    }
+
+    .input-box{
+        width:100%;
+    }
+
+}
+
+/* ===== FOOTER CELULAR ===== */
+
+@media screen and (max-width:768px){
+
+.footer-content{
+
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:15px;
+
+}
+
+.footer-logo-section{
+    display:none;
+}
+
+.footer-links h4,
+.footer-contact h4{
+    font-size:18px;
+}
+
+.footer-links ul li a,
+.footer-contact ul li{
+    font-size:12px;
+}
+
+}
