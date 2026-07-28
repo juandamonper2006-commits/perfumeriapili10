@@ -513,3 +513,69 @@ button:hover, .btn-add:hover { background: #5a0f2e; }
     }
 
 }
+
+/*=========================
+FILTROS DESPLEGABLES MÓVIL
+=========================*/
+
+.btn-filtros{
+    display:none;
+}
+
+@media screen and (max-width:768px){
+
+    .btn-filtros{
+        display:block;
+        width:100%;
+        background:#5a0f2e;
+        color:#fff;
+        border:none;
+        padding:14px;
+        border-radius:8px;
+        font-size:15px;
+        font-weight:600;
+        margin-bottom:15px;
+        cursor:pointer;
+    }
+
+    .filters{
+
+        display:none;
+
+        background:#fff;
+
+        border:1px solid #ddd;
+
+        padding:15px;
+
+        border-radius:10px;
+
+    }
+
+    .filters.activo{
+
+        display:block;
+
+        animation:abrirFiltros .3s ease;
+
+    }
+
+}
+
+@keyframes abrirFiltros{
+
+    from{
+
+        opacity:0;
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
